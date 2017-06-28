@@ -327,6 +327,15 @@ module Bosh::AzureCloud
         'validating' => 'true'
       }
 
+      unless vm_params[:managed]
+        vm['properties']['diagnosticsProfile'] = {
+            'bootDiagnostics' => {
+                'enabled' => true,
+                'storageUri' => vm_params[:os_disk][:disk_uri][/http(s)?:\/\/[a-z0-9.]*\//]
+            }
+        }
+      end
+
       http_put(url, vm, params)
     end
 
