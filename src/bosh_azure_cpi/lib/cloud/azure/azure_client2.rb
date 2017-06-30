@@ -323,7 +323,7 @@ module Bosh::AzureCloud
         vm['properties']['diagnosticsProfile'] = {
             'bootDiagnostics' => {
                 'enabled' => true,
-                'storageUri' => vm_params[:os_disk][:disk_uri][/http(s)?:\/\/[a-z0-9.]*\//]
+                'storageUri' => "http://#{@azure_properties['storage_account_name']}.blob.core.windows.net/"
             }
         }
       end
