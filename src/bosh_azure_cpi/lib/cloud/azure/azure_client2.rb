@@ -361,6 +361,15 @@ module Bosh::AzureCloud
         'validating' => 'true'
       }
 
+      unless vm_params[:managed]
+        vm['properties']['diagnosticsProfile'] = {
+          'bootDiagnostics' => {
+            'enabled' => true,
+            'storageUri' => "http://#{@azure_properties['storage_account_name']}.blob.core.windows.net/"
+          }
+        }
+      end
+
       http_put(url, vm, params)
     end
 
